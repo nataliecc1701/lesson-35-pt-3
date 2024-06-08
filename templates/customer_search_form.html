@@ -3,8 +3,8 @@
 {% block content %}
 <h1>Find a Customer</h1>
 
-{% if empty %}
-<div>No matching customers found. Try another search?</div>
+{% if mismatch %}
+<div>No customers matching {{mismatch}} found. Try another search?</div>
 {% endif %}
 
 <form action="/search/" method="GET">

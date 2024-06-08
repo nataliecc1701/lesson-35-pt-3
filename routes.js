@@ -53,10 +53,10 @@ router.get("/search", async function(req, res, next) {
     try {
       const customers = await Customer.searchByName(req.query.name)
       if (customers.length === 0) {
-        return res.render("customer_search_form.html", {empty:true})
+        return res.render("customer_search_form.html", {mismatch:req.query.name})
       }
       else {
-        return res.render("customer_list.html", {customers})
+        return res.render("customer_search_results.html", {customers})
       }
     }
     catch (err) {
@@ -65,7 +65,7 @@ router.get("/search", async function(req, res, next) {
   }
   else {
     try {
-      return res.render("customer_search_form.html", {empty:false})
+      return res.render("customer_search_form.html", {mismatch:null})
     }
     catch (err) {
       return next(err)
