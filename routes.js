@@ -73,6 +73,17 @@ router.get("/search", async function(req, res, next) {
   }
 })
 
+/** Show top customers */
+
+router.get("/top", async function(req, res, next) {
+  try {
+    const customers = await Customer.getBest(10);
+    return res.render("customer_list.html", { customers });
+  } catch (err) {
+    return next(err);
+  }
+})
+
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function(req, res, next) {
