@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}New Customer{% endblock %}
+{% block content %}
+<h1>Find a Customer</h1>
+
+{% if empty %}
+<div>No matching customers found. Try another search?</div>
+{% endif %}
+
+<form action="/search/" method="GET">
+  <div class="form-group">
+    <label for="name">Name: </label>
+    <input id="name" class="form-control" name="name">
+  </div>
+  <button class="btn btn-primary">Search</button>
+  <a href="/" class="btn btn-danger">Cancel</a>
+</form>
+
+{% endblock %}

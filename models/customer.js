@@ -52,6 +52,38 @@ class Customer {
 
     return new Customer(customer);
   }
+  
+  /** get a customer by name */
+  
+  static async searchByName(name) {
+    const names = name.split(' ');
+    let results;
+    if (names.length === 1) {
+      results = await db.query(
+        `SELECT id,
+          first_name AS "firstName",
+          last_name AS "lastName",
+          phone,
+          notes
+        FROM customers WHERE first_name = $1 OR last_name = $1`,
+        [names[0]]
+      )
+    }
+    else {
+      results = await db.query(
+        `SELECT id,
+          first_name AS "firstName",
+          last_name AS "lastName",
+          phone,
+          notes
+        FROM customers WHERE first_name = $1 AND last_name = $2`,
+        [names[0], names[names.length-1]]
+      )
+    }
+    
+    const customers = results.rows.map((r) => new Customer(r));
+    return customers;
+  }
 
   /** get all reservations for this customer. */
 
@@ -78,6 +110,8 @@ class Customer {
       );
     }
   }
+  
+  /** get the customer's full name */
   
   fullName() {
     return `${this.firstName} ${this.lastName}`
